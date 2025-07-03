@@ -2,57 +2,57 @@ import { useEffect, useState } from 'react';
 import './App.css';
 function App() {
   const [board, setboard] = useState(Array(9).fill(null))
-  const [xturn,setxturn]=useState(true)
-  const winningcondition=[
-    [0,4,8],[2,4,6],[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8]
+  const [xturn, setxturn] = useState(true)
+  const winningcondition = [
+    [0, 4, 8], [2, 4, 6], [0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8]
   ]
-  const [winner,setwinner]=useState(null)
- const checkwin=(board)=>{
-  for(let condition of winningcondition){
-    const[a,b,c]=condition;
-         if (board[a] && board[a] === board[b] && board[b] === board[c]) {
+  const [winner, setwinner] = useState(null)
+  const checkwin = (board) => {
+    for (let condition of winningcondition) {
+      const [a, b, c] = condition;
+      if (board[a] && board[a] === board[b] && board[b] === board[c]) {
         return board[a]; // returns 'X' or '0'
       }
-      return null;
     }
- }
-  const handleClick=(index)=>{
-    if (board[index]===null && xturn===true){
-      board[index]="X"
+    return null;
+  }
+  const handleClick = (index) => {
+    if (board[index] === null && xturn === true) {
+      board[index] = "X"
       setboard(board)
-      const newboard=[...board]
-      const gamewinner=checkwin(newboard)
+      const newboard = [...board]
+      const gamewinner = checkwin(newboard)
       setwinner(gamewinner)
       setxturn(false)
     }
-    if (board[index]===null && xturn===false){
-      board[index]="0"
+    if (board[index] === null && xturn === false) {
+      board[index] = "0"
       setboard(board)
-      const newboard=[...board]
-      const gamewinner=checkwin(newboard)
+      const newboard = [...board]
+      const gamewinner = checkwin(newboard)
       setwinner(gamewinner)
       setxturn(true)
     }
-    if(!board.includes(null)){
+    if (!board.includes(null)) {
       setwinner("Draw")
     }
   }
-  const resetGame=()=>{
+  const resetGame = () => {
     setboard(Array(9).fill(null))
     setxturn(true)
     setwinner(null)
   }
-  const currentturn=xturn ?"X":"0"
+  const currentturn = xturn ? "X" : "0"
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-100 to-purple-200 p-6">
       <h1 className="text-4xl font-extrabold mb-6 text-gray-800 drop-shadow-lg">Tic Tac Toe</h1>
-      
+
       <p className="text-2xl font-semibold mb-4 text-gray-700">
         {winner === 'Draw'
           ? "😶 It's a Draw!"
           : winner
-          ? `🎉 Winner: ${winner}`
-          : `🔄 Current Turn: ${currentturn}`}
+            ? `🎉 Winner: ${winner}`
+            : `🔄 Current Turn: ${currentturn}`}
       </p>
 
       <div className="grid grid-cols-3 gap-3 mb-4">
